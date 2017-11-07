@@ -9,3 +9,5 @@ document my preferences in this repository.
 
 And, lucky for you, I am making everything public. Now you can be a
 real copycat, just like me. Enjoy!
+
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
