@@ -1,0 +1,1 @@
+export ENDPOINTS_GAE_SDK=/usr/lib/google-cloud-sdk
