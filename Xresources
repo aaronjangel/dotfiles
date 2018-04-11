@@ -1,0 +1,2 @@
+! Set a print job name to something sensible
+x3270.printer.command: lpr -T %L%@%H%
