@@ -1,0 +1,8 @@
+# Security configuration items can be set here. This file should be kept
+# encrypted at rest; when Mutt is executed, it will call gnupg to descrypt
+# the file and keep settings in memory, preventing you from having to maintain
+# passwords in a cleartext file. Encrypt this file to secure.pgp and delete
+# the original.
+
+# Account-specific IMAP Passwords
+account-hook @example      'set imap_pass="hackme123"'

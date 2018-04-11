@@ -1,0 +1,20 @@
+# Default folder and mailboxes
+set folder="imaps://cal@example.com@imap.gmail.com/"
+mailboxes =INBOX =[Gmail]/Drafts =[Gmail]/'Sent Items'
+
+# User account-specific settings
+#
+#   The `imap_user` variable is set here so it can be re-used for the
+#   default Gmail settings below.
+#
+account-hook @example    'set from="Rando Calrissian <cal@example.com>"'
+account-hook @example    'set imap_user=cal@example.com'
+
+# Defaults for Gmail
+account-hook @imap.gmail  'set postponed="=[Gmail]/Drafts"'
+account-hook @imap.gmail  'set record=""'
+account-hook @imap.gmail  'set smtp_url="smtps://$imap_user@imap.gmail.com"'
+account-hook @imap.gmail  'set smtp_pass=$imap_pass'
+
+# Source secure configuration (passwords, etc.)
+source 'gpg --textmode -d ~/.mutt/secure.gpg |'
