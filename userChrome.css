@@ -1,0 +1,17 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* This hides the urlbar placeholder text, because I don't need to be told
+ * I can search from the urlbar when I disabled the ability to search from the
+ * urlbar. P.S., I'm really tired of browsers trying to solve usability
+ * problems by hiding design flaws instead of fixing them.
+ */
+#urlbar *|*.textbox-input::-moz-placeholder {
+  color: transparent !important;
+}
+
+/* If I don't want to be told with words that I can do something I cannot do, I
+ * probably don't want to be told with a stupid icon, either.
+ */
+#urlbar[pageproxystate="invalid"] > #identity-box > #identity-icon {
+  list-style-image: url(chrome://browser/skin/chevron.svg) !important;
+}
