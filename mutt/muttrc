@@ -1,20 +1,22 @@
-# Default folder and mailboxes
+# Useful defaults for Gmail.
+#
+folder-hook gmail\.com 'set postponed="=[Gmail]/Drafts"'
+folder-hook gmail\.com 'set record=""'
+folder-hook gmail\.com 'set smtp_url="smtps://$imap_user@imap.gmail.com"'
+folder-hook gmail\.com 'set smtp_pass=$imap_pass'
+folder-hook gmail\.com 'set from=$imap_user'
+folder-hook gmail\.com 'set folder="imaps://$imap_user@imap.gmail.com/"'
+
+# If you have multiple accounts, the last account listed will be the default
+# if setting the folder variable. Below it is used merely as a shortcut to
+# specify multiple mailboxes for the same account.
+#
 set folder="imaps://cal@example.com@imap.gmail.com/"
 mailboxes =INBOX =[Gmail]/Drafts =[Gmail]/'Sent Items'
 
-# User account-specific settings
+# This is a regular mutt configuration file encrypted using PGP. It is
+# automatically decrypted when you run mutt, after prompting you for your
+# password if necessary. You can use this technique to avoid having to
+# store plaintext copies of your passwords or other secure information.
 #
-#   The `imap_user` variable is set here so it can be re-used for the
-#   default Gmail settings below.
-#
-account-hook @example    'set from="Rando Calrissian <cal@example.com>"'
-account-hook @example    'set imap_user=cal@example.com'
-
-# Defaults for Gmail
-account-hook @imap.gmail  'set postponed="=[Gmail]/Drafts"'
-account-hook @imap.gmail  'set record=""'
-account-hook @imap.gmail  'set smtp_url="smtps://$imap_user@imap.gmail.com"'
-account-hook @imap.gmail  'set smtp_pass=$imap_pass'
-
-# Source secure configuration (passwords, etc.)
 source 'gpg --textmode -d ~/.mutt/secure.gpg |'
