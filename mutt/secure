@@ -1,8 +1,14 @@
 # Security configuration items can be set here. This file should be kept
-# encrypted at rest; when Mutt is executed, it will call gnupg to descrypt
+# encrypted at rest. Encrypt this file to secure.gpg and delete the original.
+#
+# When Mutt is executed, it will call gnupg to descrypt
 # the file and keep settings in memory, preventing you from having to maintain
-# passwords in a cleartext file. Encrypt this file to secure.pgp and delete
-# the original.
+# passwords in a cleartext file.
 
-# Account-specific IMAP Passwords
-account-hook @example      'set imap_pass="hackme123"'
+# Account-specific IMAP usernames and passwords
+#
+# Set imap_user in a folder-hook for gmail accounts so it can be reused as
+# the from address when composing mail. This simplifies configuration in
+# muttrc, saving you from having to type your email address yet again.
+folder-hook  '\@gmail.com' 'set imap_user=cal@gmail.com'
+account-hook '\@gmail.com' 'set imap_pass="hackme123"'
