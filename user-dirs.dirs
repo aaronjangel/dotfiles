@@ -1,0 +1,13 @@
+# This goes in ~/.config/.
+#
+# I hate capitalized folders. Also, my desktop should be my desktop. I don't
+# need to see it anywhere else.
+# 
+XDG_DESKTOP_DIR="$HOME/.local/desktop"
+XDG_DOWNLOAD_DIR="$HOME/incoming"
+XDG_TEMPLATES_DIR="$HOME/tmpl"
+XDG_PUBLICSHARE_DIR="$HOME/pub"
+XDG_DOCUMENTS_DIR="$HOME/doc"
+XDG_MUSIC_DIR="$HOME/music"
+XDG_PICTURES_DIR="$HOME/images"
+XDG_VIDEOS_DIR="$HOME/videos"
