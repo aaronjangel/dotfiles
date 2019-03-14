@@ -5,10 +5,12 @@
 # the file and keep settings in memory, preventing you from having to maintain
 # passwords in a cleartext file.
 
-# Account-specific IMAP usernames and passwords
+
+# International Secret Intelligence Service
 #
-# Set imap_user in a folder-hook for gmail accounts so it can be reused as
-# the from address when composing mail. This simplifies configuration in
-# muttrc, saving you from having to type your email address yet again.
-folder-hook  '\@gmail.com' 'set imap_user=cal@gmail.com'
-account-hook '\@gmail.com' 'set imap_pass="hackme123"'
+account-hook 'duchess' '\
+  set imap_user=duchess;\
+  set imap_pass="guest";\
+  source ~/.mutt/duchess;'
+folder-hook 'duchess' '\
+  set folder="imaps://duchess@imap.secrets.gov"'

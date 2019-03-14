@@ -1,0 +1,3 @@
+set smtp_url="smtps://$imap_user@smtp.gmail.com";
+set smtp_pass=$imap_pass;
+set from=$imap_user;

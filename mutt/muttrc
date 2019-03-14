@@ -5,18 +5,19 @@
 #
 source 'gpg --textmode -d ~/.mutt/secure.gpg |'
 
-# Useful defaults for Gmail.
-#
-folder-hook '\@gmail.com' 'set smtp_url="smtps://$imap_user@imap.gmail.com"'
-folder-hook '\@gmail.com' 'set smtp_pass=$imap_pass'
-folder-hook '\@gmail.com' 'set from=$imap_user'
-folder-hook '\@gmail.com' 'set folder="imaps://$imap_user@imap.gmail.com/"'
-folder-hook '\@gmail.com' 'set postponed="=[Gmail]/Drafts"'
-folder-hook '\@gmail.com' 'set record=""'
+set record=""
+set folder="imaps://duchess@imap.secrets.gov/"
+mailboxes =INBOX
+mailboxes imaps://lando@calrissiano.com@imap.calrissiano.com/"
 
-# If you have multiple accounts, the last account listed will be the default
-# if setting the folder variable. Below it is used merely as a shortcut to
-# specify multiple mailboxes for the same account.
+# Useful defaults for editting messages.
 #
-set folder="imaps://cal@example.com@imap.gmail.com/"
-mailboxes =INBOX =[Gmail]/Drafts =[Gmail]/'Sent Items'
+set autoedit=yes edit_headers=yes abort_unmodified=no
+
+# Useful macros
+macro browser <F5> <check-new>
+macro index .c '<change-folder>?<change-dir>^A^K=<enter>' # context-sensitive!
+
+# More useful shit
+auto_view text/html
+alternative_order text/plain text/html
