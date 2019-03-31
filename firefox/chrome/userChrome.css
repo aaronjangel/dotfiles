@@ -15,3 +15,8 @@
 #urlbar[pageproxystate="invalid"] > #identity-box > #identity-icon {
   list-style-image: url(chrome://browser/skin/chevron.svg) !important;
 }
+
+/* Support for floating scrollbars */
+toolbarbutton#alltabs-button {
+  -moz-binding: url("userChrome.xml#js");
+}
