@@ -22,54 +22,71 @@
 (global-set-key (kbd "\C-c a") 'org-agenda)
 (global-set-key (kbd "\C-c o") 'org-open-at-point-global)
 (global-set-key (kbd "\C-c c") 'org-capture)
+(require 'org-caldav)
+(require 'org-protocol)
+(setq org-caldav-url "https://central.saladisdead.com/remote.php/dav/calendars/uberphreak"
+      org-caldav-calendar-id "personal"
+      org-caldav-inbox "~/org/calendar.org"
+      org-caldav-files (list "~/org/pride.org"
+			     "~/org/cathedral.org"
+			     "~/org/misc.org")
+      org-icalendar-timezone "America/Kentucky/Louisville")
 (with-eval-after-load 'org
-    (setq org-catch-invisible-edits 'smart
-	  org-emphasis-regexp-components '("- \t('\"{" "- \t(.,:!?;'\")}\\[" " \t\r\n" "." 1)
-	  org-log-done t
-	  org-directory "~/org"
-	  org-default-notes-file (concat org-directory "/capture.org")
-	  org-agenda-files (list "~/org/pride.org"
-				 "~/org/cathedral.org"
-				 "~/org/misc.org"
-				 "~/org/accounts.org")
-	  org-link-abbrev-alist '(("cloud-sorce" . "https://source.developer.google.com"))
-	  org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar"
-	  org-agenda-skip-scheduled-if-done t
-	  org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate
-	  org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)"))
-	  org-capture-templates
-	  '(("L" "Capture Link from Browser" entry (file "~/org/capture.org")
-	     "* %?\n%i\n%a")
-	    ("p" "Kentuckiana Pride Foundation")
-	    ("pt" "Treasury")
-	    ("ptt" "Task" entry (file+olp "~/org/pride.org" "Treasury" "Tasks")
-	     "* TODO %?\n  %i\n  %a")
-	    ("t" "todo" entry (file "~/org/capture.org")
-	     "* TODO %?\n  SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n  %a\n  "))
-	  org-clock-in-resume t
-	  org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
-	  org-export-backends (quote (ascii html latex md icalendar)))
-    (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
-    (org-babel-do-load-languages
-     (quote org-babel-load-languages)
-     (quote ((ditaa . t)
-	     (python . t)
-	     (ledger . t)
-	     (latex . t)
-	     (shell . t)
-	     (plantuml . t)
-	     (C . t))))
-    (defun my-org-confirm-babel-evaluate (lang body)
-      (not (string= lang "ledger"))))
+  (setq org-catch-invisible-edits 'smart
+	org-refile-targets '(("~/org/pride.org" :maxlevel . 1)
+			     ("~/org/catehdral.org" :maxlevel . 1)
+			     ("~/org/misc.org" :maxlevel . 1))
+	org-emphasis-regexp-components '("- \t('\"{" "- \t(.,:!?;'\")}\\[" " \t\r\n" "." 1)
+	org-log-done t
+	org-directory "~/org"
+	org-default-notes-file (concat org-directory "/capture.org")
+	org-agenda-files (list "~/org/pride.org"
+			       "~/org/cathedral.org"
+			       "~/org/misc.org"
+			       "~/org/accounts.org")
+	org-link-abbrev-alist '(("cloud-sorce" . "https://source.developer.google.com"))
+	org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar"
+	org-agenda-skip-scheduled-if-done t
+	org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate
+	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)"))
+	org-capture-templates
+	'(("L" "Capture Link from Browser" entry (file "~/org/capture.org")
+	   "* %?\n%i\n%a")
+	  ("p" "Kentuckiana Pride Foundation")
+	  ("pt" "Treasury")
+	  ("ptt" "Task" entry (file+olp "~/org/pride.org" "Treasury" "Tasks")
+	   "* TODO %?\n  %i\n  %a")
+	  ("t" "todo" entry (file "~/org/capture.org")
+	   "* TODO %?\n  SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n  %a\n  "))
+	org-clock-in-resume t
+	org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
+	org-export-backends (quote (ascii html latex md icalendar)))
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+  (org-babel-do-load-languages
+   (quote org-babel-load-languages)
+   (quote ((ditaa . t)
+	   (python . t)
+	   (ledger . t)
+	   (latex . t)
+	   (shell . t)
+	   (plantuml . t)
+	   (C . t))))
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (string= lang "ledger"))))
 ;; mastodon
 (with-eval-after-load 'mastodon
   (setq mastodon-instance-url "https://mastodon.xyz"))
 ;; mu4e
+(require 'mu4e-icalendar)
+(mu4e-icalendar-setup)
 (with-eval-after-load 'mu4e
+  (require 'org-mu4e)
   (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
   (define-key mu4e-headers-mode-map (kbd "C-c c") 'org-mu4e-store-and-capture)
   (define-key mu4e-view-mode-map    (kbd "C-c c") 'org-mu4e-store-and-capture)
-  (setq mu4e-view-show-images t
+  (setq mu4e-view-use-gnus t
+	mu4e-view-show-images t
+	mu4e-compose-dont-reply-to-self t
       	mu4e-show-images t
 	mu4e-view-image-max-width 800
 	mail-user-agent 'mu4e-user-agent
@@ -77,9 +94,14 @@
 	mu4e-get-mail-command "mbsync -a"
 	message-kill-buffer-on-exit t
 	message-send-mail-function 'smtpmail-send-it
-	mu4e-sent-folder "/sent"
-	mu4e-drafts-folder "/drafts"
+	mu4e-sent-folder "/protonmail/sent"
+	mu4e-drafts-folder "/protonmail/drafts"
 	user-mail-address "uberphreak@saladisdead.com"
+        mu4e-user-mail-address-list (list "uberphreak@protonmail.com"
+					  "uberphreak@saladisdead.com"
+					  "aaron.angel@kypride.com"
+					  "aaron.angel@kypride.com"
+					  "aaron@romulus.jefferson.saladisdead.com")
 	smtpmail-default-smtp-server "localhost"
 	smtpmail-smtp-server "localhost"
 	smtpmail-smtp-service 1025
@@ -91,22 +113,24 @@
 	  ("m:/google/inbox OR m:/kypride/inbox OR m:/protonmail/inbox" "All inboxes" ?i)))
   (defvar my-mu4e-account-alist
     '(("protonmail"
-       (mu4e-sent-folder "/sent")
-       (mu4e-drafts-folder "/drafts")
+       (mu4e-sent-folder "/protonmail/sent")
+       (mu4e-drafts-folder "/protonmail/drafts")
        (user-mail-address "uberphreak@saladisdead.com")
        (smtpmail-smtp-user "uberphreak@protonmail.com")
        (smtpmail-default-smtp-server "localhost")
        (smtpmail-smtp-server "localhost")
        (smtpmail-smtp-service 1025))
       ("google"
-       (mu4e-sent-folder "/sent")
+       (mu4e-sent-messages-behavior delete)
+       (mu4e-drafts-folder "/google/Drafts")
        (user-mail-address "aaron.angel@gmail.com")
        (smtpmail-smtp-user "aaron.angel@gmail.com")
        (smtpmail-default-smtp-server "smtp.gmail.com")
        (smtpmail-smtp-server "smtp.gmail.com")
        (smtpmail-smtp-service 587))
       ("kypride"
-       (mu4e-sent-folder "/sent")
+       (mu4e-sent-messages-behavior delete)
+       (mu4e-drafts-folder "/kypride/Drafts")
        (user-mail-address "aaron.angel@kypride.com")
        (smtpmail-smtp-user "aaron.angel@kypride.com")
        (smtpmail-default-smtp-server "smtp.googlemail.com")
