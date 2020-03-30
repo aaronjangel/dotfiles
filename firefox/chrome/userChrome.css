@@ -1,22 +1,20 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@namespace url("http://www.w3.org/1999/xhtml");
 
 /* This hides the urlbar placeholder text, because I don't need to be told
  * I can search from the urlbar when I disabled the ability to search from the
  * urlbar. P.S., I'm really tired of browsers trying to solve usability
  * problems by hiding design flaws instead of fixing them.
  */
-#urlbar *|*.textbox-input::-moz-placeholder {
+#urlbar-input::placeholder,
+#urlbar-input:focus::placeholder {
   color: transparent !important;
 }
 
 /* If I don't want to be told with words that I can do something I cannot do, I
  * probably don't want to be told with a stupid icon, either.
+ *
+ * This still doesn't work in Quantum, and I haven't quite figured out why.
  */
-#urlbar[pageproxystate="invalid"] > #identity-box > #identity-icon {
+#urlbar[pageproxystate="invalid"] > #urlbar-input-container > #identity-box[pageproxystate="invalid"] > #identity-icon {
   list-style-image: url(chrome://browser/skin/chevron.svg) !important;
-}
-
-/* Support for floating scrollbars */
-toolbarbutton#alltabs-button {
-  -moz-binding: url("userChrome.xml#js");
 }
