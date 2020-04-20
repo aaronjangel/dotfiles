@@ -1,20 +1,46 @@
-@namespace url("http://www.w3.org/1999/xhtml");
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /* This hides the urlbar placeholder text, because I don't need to be told
  * I can search from the urlbar when I disabled the ability to search from the
  * urlbar. P.S., I'm really tired of browsers trying to solve usability
  * problems by hiding design flaws instead of fixing them.
  */
-#urlbar-input::placeholder,
-#urlbar-input:focus::placeholder {
+#urlbar *|*.textbox-input::-moz-placeholder {
   color: transparent !important;
 }
 
 /* If I don't want to be told with words that I can do something I cannot do, I
  * probably don't want to be told with a stupid icon, either.
- *
- * This still doesn't work in Quantum, and I haven't quite figured out why.
  */
-#urlbar[pageproxystate="invalid"] > #urlbar-input-container > #identity-box[pageproxystate="invalid"] > #identity-icon {
+#urlbar[pageproxystate="invalid"] > #identity-box > #identity-icon {
   list-style-image: url(chrome://browser/skin/chevron.svg) !important;
+}
+
+/* Disable the stupid megabar bullshit. Seriously, Mozilla, stop fucking up
+ * Firefox for shits and giggles. This is why Google is winning.
+ *
+ * Source: https://support.mozilla.org/en-US/questions/1274579
+ */
+#urlbar[breakout],
+#urlbar[breakout][breakout-extend] {
+  --urlbar-height: 28px !important;
+  --urlbar-toolbar-height: 30px !important;
+
+  width: 100% !important;
+  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+  left: 0 !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container,
+#urlbar-input-container {
+  height: var(--urlbar-height) !important;
+  width: 100% !important;
+  padding-block: unset !important;
+  padding-inline: unset !important;
+  transition: none !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  box-shadow: 0 1px 4px rgba(0,0,0,.05) !important;
+  animation: none !important;
 }
